@@ -58,17 +58,18 @@ def thread_two():
         if not thread2.is_alive():
             print("Thread 2 is not alive. Restarting...")
         start_locust(120, 500, 'Thread 2')
-        time.sleep(180)
+        # time.sleep(180)
 
 
 def thread_three():
+    random.seed(time.time() + threading.get_ident())
     while running:
         if not thread3.is_alive():
             print("Thread 3 is not alive. Restarting...")
         interval = 300
         duration = random.randint(30, 60)
         start_locust(duration, 1000, 'Thread 3')
-        time.sleep(interval - duration)
+        # time.sleep(interval - duration)
 
 
 thread1 = threading.Thread(target=thread_one, name='Thread 1')
