@@ -4,19 +4,7 @@ import random
 from locust.env import Environment
 from locustfile import WebsiteUser
 
-# import os
-# import signal
-
 running = True
-
-# def signal_handler(signum, frame):
-#     global running
-#     print('Received shutdown signal. Stopping threads...')
-#     running = False
-#
-#
-# signal.signal(signal.SIGINT, signal_handler)
-# signal.signal(signal.SIGTERM, signal_handler)
 
 host_url = "http://aditya.discworld.cc/"
 max_users = 1_000_000_000
@@ -27,17 +15,6 @@ env.create_local_runner()
 
 def start_locust(duration, users_per_second, thread_name):
     while running:
-        # locust_command = (
-        #     f"locust -f locustfile.py --autostart "
-        #     f"-u {max_users} -r {users_per_second} "
-        #     f"-t {duration}s "
-        #     f"-H {host_url} "
-        #     # f"--web-host 127.0.0.1 "
-        #     # f"--web-port 8089"
-        # )
-        # print(f"[{thread_name}] Running Locust command: {locust_command}")
-        # os.system(locust_command)
-        # print(f"[{thread_name}] Locust run completed.")
 
         env.runner.start(user_count=max_users, spawn_rate=users_per_second)
 
@@ -58,7 +35,6 @@ def thread_two():
         if not thread2.is_alive():
             print("Thread 2 is not alive. Restarting...")
         start_locust(120, 500, 'Thread 2')
-        # time.sleep(180)
 
 
 def thread_three():
@@ -69,7 +45,6 @@ def thread_three():
         interval = 300
         duration = random.randint(30, 60)
         start_locust(duration, 1000, 'Thread 3')
-        # time.sleep(interval - duration)
 
 
 thread1 = threading.Thread(target=thread_one, name='Thread 1')
