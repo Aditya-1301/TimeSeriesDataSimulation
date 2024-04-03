@@ -7,19 +7,16 @@ from locustfile import WebsiteUser
 running = True
 
 host_url = "http://aditya.discworld.cc/"
-max_users = 1_000_000_000
 env = Environment(user_classes=[WebsiteUser], host=host_url)
 env.create_web_ui("127.0.0.1", 8089)
 env.create_local_runner()
 
 
-def start_locust(duration, users_per_second, thread_name):
+def start_locust(max_users, duration, users_per_second, start_timer=0):
     while running:
-
+        time.sleep(start_timer)
         env.runner.start(user_count=max_users, spawn_rate=users_per_second)
-
         time.sleep(duration)
-
         env.runner.quit()
 
 
@@ -27,14 +24,14 @@ def thread_one():
     while running:
         if not thread1.is_alive():
             print("Thread 1 is not alive. Restarting...")
-        start_locust(60, 500, 'Thread 1')
+        start_locust(500_000, 60, 500)
 
 
 def thread_two():
     while running:
         if not thread2.is_alive():
             print("Thread 2 is not alive. Restarting...")
-        start_locust(120, 500, 'Thread 2')
+        start_locust(100_000, 120, 500, 30)
 
 
 def thread_three():
@@ -42,9 +39,9 @@ def thread_three():
     while running:
         if not thread3.is_alive():
             print("Thread 3 is not alive. Restarting...")
-        interval = 300
+        # interval = 300
         duration = random.randint(30, 60)
-        start_locust(duration, 1000, 'Thread 3')
+        start_locust(50_0000, duration, 1000, 60)
 
 
 thread1 = threading.Thread(target=thread_one, name='Thread 1')
