@@ -8,5 +8,5 @@ The final script which was used for test data generation was `script4.py`.
 
 
 <span>
-  <img src="https://github.com/Aditya-1301/TimeSeriesDataSimulation/Images/LocustSim.webp" width="300" height="300">
+  <img src="Images/LocustSim.webp">
 </span>
